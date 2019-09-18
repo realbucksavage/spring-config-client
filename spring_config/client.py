@@ -2,8 +2,7 @@ import base64
 import sys
 import logging
 
-from spring_config import Singleton
-from spring_config.utils import str_is_blank
+from spring_config.utils import Singleton, str_is_blank
 import requests
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
