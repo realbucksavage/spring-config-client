@@ -27,13 +27,15 @@ class SpringConfigClient(metaclass=Singleton):
         if not str_is_blank(auth_username) and not str_is_blank(auth_password):
             logging.debug("Will attempt to provide basic authentication")
 
-            _authn_str = base64.b64encode(f"{auth_username}:{auth_password}".encode())
+            _authn_str = base64.b64encode(
+                f"{auth_username}:{auth_password}".encode()
+            ).decode()
             _request_headers["Authorization"] = f"Basic {_authn_str}"
 
         logging.debug(f"Requesting: {_request_url}")
 
         try:
-            response = requests.get(_request_headers, headers=_request_headers)
+            response = requests.get(_request_url, headers=_request_headers)
 
             if response.status_code == 200:
                 self._config = response.json()
