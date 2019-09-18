@@ -2,12 +2,17 @@ from collections import OrderedDict
 
 import setuptools
 
+with open("README.md", "r") as readme:
+    long_description = readme.read()
+
 setuptools.setup(
     name="spring-config-client",
     version="0.1",
     author="realbucksavage",
     description="A client for Spring Config Server",
-    license="Apache-2.0",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    license="MIT",
     url="https://realbucksavage.github.io/spring-config-client",
     packages=setuptools.find_packages(),
     python_requires=">=3.6.0",
