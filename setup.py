@@ -32,7 +32,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.7",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Java Libraries",
     ],

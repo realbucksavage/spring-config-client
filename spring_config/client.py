@@ -13,6 +13,7 @@ class SpringConfigClient(metaclass=Singleton):
         self,
         address: str = "http://localhost:8888",
         profile: str = "development",
+        branch: str = "master",
         app_name: str = None,
         auth_username: str = None,
         auth_password: str = None,
@@ -21,7 +22,7 @@ class SpringConfigClient(metaclass=Singleton):
         if str_is_blank(app_name):
             raise ValueError("app_name cannot be blank")
 
-        _request_url = f"{address}/{app_name}-{profile}.json"
+        _request_url = f"{address}/{branch}/{app_name}-{profile}.json"
         _request_headers = {}
 
         if not str_is_blank(auth_username) and not str_is_blank(auth_password):
