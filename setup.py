@@ -7,7 +7,7 @@ with open("README.md", "r") as readme:
 
 setuptools.setup(
     name="spring-config-client",
-    version="0.1",
+    version="0.2",
     author="realbucksavage",
     description="A client for Spring Config Server",
     long_description=long_description,

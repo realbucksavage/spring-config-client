@@ -1,37 +1,25 @@
 import base64
-import sys
 import logging
+import sys
 
-from spring_config.utils import Singleton, str_is_blank
 import requests
+
+from spring_config import Singleton, ClientConfiguration
+from spring_config.utils import str_is_blank
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
 class SpringConfigClient(metaclass=Singleton):
-    def __init__(
-        self,
-        address: str = "http://localhost:8888",
-        profile: str = "development",
-        branch: str = "master",
-        app_name: str = None,
-        auth_username: str = None,
-        auth_password: str = None,
-    ):
+    def __init__(self, client_config: ClientConfiguration):
 
-        if str_is_blank(app_name):
-            raise ValueError("app_name cannot be blank")
+        address = client_config.get_address()
+        branch = client_config.get_branch()
+        app_name = client_config.get_app_name()
+        profile = client_config.get_profile()
 
         _request_url = f"{address}/{branch}/{app_name}-{profile}.json"
-        _request_headers = {}
-
-        if not str_is_blank(auth_username) and not str_is_blank(auth_password):
-            logging.debug("Will attempt to provide basic authentication")
-
-            _authn_str = base64.b64encode(
-                f"{auth_username}:{auth_password}".encode()
-            ).decode()
-            _request_headers["Authorization"] = f"Basic {_authn_str}"
+        _request_headers = {"Authorization": client_config.get_authn_header()}
 
         logging.debug(f"Requesting: {_request_url}")
 
