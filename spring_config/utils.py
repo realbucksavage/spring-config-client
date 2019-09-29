@@ -7,6 +7,10 @@ class Singleton(type):
 
         return cls._instances[cls]
 
+    def discard_singleton(cls):
+        if cls in cls._instances:
+            del cls._instances[cls]
+
 
 def str_is_blank(string: str) -> bool:
     return bool(not string or not string.strip())
