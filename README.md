@@ -79,19 +79,6 @@ The `ClientConfigurationBuilder` allow controlling these parameters.
 - Profile : `profile("production")` - Default `development`, optional.
 - Branch : `branch("devel/0.1")` - Default `master`, optional.
 
-### Using with Flask
-
-```python
-from flask import Flask
-from spring_config import client
-
-config_client = client.SpringConfigClient(...)
-
-app = Flask(...)
-
-# ... continued.
-```
-
 ## Requesting features
 
 Please use the [issues section](https://github.com/realbucksavage/spring-config-client/issues) to request new features and I will try to take out my time to work on them. Contributions in any sorts are always welcome :)
