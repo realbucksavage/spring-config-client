@@ -20,30 +20,64 @@ $ pip install spring-config-client
 
 ## Usage
 
-The very very usage of this library can be implemented like this:
+The very basic usage of this library looks like this:
 
 ```python
+from spring_config import ClientConfigurationBuilder
 from spring_config.client import SpringConfigClient
 
-c = SpringConfigClient(app_name="test-application")
+config = ClientConfigurationBuilder().app_name("test-application").build()
+
+c = SpringConfigClient(config)
 c.get_config()
 ```
 
-By default, this package tries to fetch configuration from `http://localhost:8888` using `development` profile. These parameters can be changed by passing them into the `SpringConfigClient` constructor.
+By default, `ClientConfigurationBuilder` builds a `ClientConfiguration` object with server address and application profile set to `http://localhost:8888` and `development`. These can be changed like this:
 
 Here are some examples:
 
 ```python
 # Fetch from http://someserver.com using profile "development"
-c = SpringConfigClient(address="http://someserver.com", app_name="some_app")
+config = (
+    ClientConfigurationBuilder()
+    .app_name("test-application")
+    .address("http://someserver.com")
+    .build()
+)
 
 # Fetch from http://someserver.com using profile "production"
-c = SpringConfigClient(
-    address="http://someserver.com",
-    app_name="some_app",
-    profile="production"
+config = (
+    ClientConfigurationBuilder()
+    .app_name("test-application")
+    .address("http://someserver.com")
+    .profile("production")
+    .build()
 )
 ```
+
+### Authentication
+
+If your configuration server requires to use basic authentication, you can create the client configuration like this:
+
+```python
+from spring_config import ClientConfigurationBuilder
+
+config = (
+    ClientConfigurationBuilder()
+    .app_name("test-application")
+    .authentication(("username", "password"))
+    .build()
+)
+```
+
+### Configuration options
+
+The `ClientConfigurationBuilder` allow controlling these parameters.
+
+- Application Name : `app_name("some-app")` - Default `None`, required.
+- Server Address : `address("http://some-server")` - Default `http://localhost:8888`, optional.
+- Profile : `profile("production")` - Default `development`, optional.
+- Branch : `branch("devel/0.1")` - Default `master`, optional.
 
 ### Using with Flask
 
