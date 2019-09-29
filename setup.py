@@ -7,7 +7,7 @@ with open("README.md", "r") as readme:
 
 setuptools.setup(
     name="spring-config-client",
-    version="0.1",
+    version="0.2",
     author="realbucksavage",
     description="A client for Spring Config Server",
     long_description=long_description,
@@ -32,7 +32,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.7",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Java Libraries",
     ],
