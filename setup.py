@@ -1,13 +1,19 @@
+import os
 from collections import OrderedDict
 
 import setuptools
+
+release_tag = os.getenv("RELEASE")
+if not release_tag:
+    print("RELEASE environment must be set")
+    exit(2)
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
 
 setuptools.setup(
     name="spring-config-client",
-    version="0.2",
+    version=release_tag,
     author="realbucksavage",
     description="A client for Spring Config Server",
     long_description=long_description,
@@ -26,7 +32,7 @@ setuptools.setup(
             ),
         )
     ),
-    install_requires=["requests>=2.22.0"],
+    install_requires=["requests>=2.28.2"],
     classifiers=[
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
