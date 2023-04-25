@@ -4,10 +4,10 @@ import requests
 
 from spring_config import ClientConfiguration
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
-
 
 class SpringConfigClient:
+    _logger = logging.getLogger("SpringConfigClient")
+
     def __init__(self, client_config: ClientConfiguration):
 
         address = client_config.get_address()
@@ -18,7 +18,7 @@ class SpringConfigClient:
         _request_url = f"{address}/{branch}/{app_name}-{profile}.json"
         _request_headers = {"Authorization": client_config.get_authn_header()}
 
-        logging.debug(f"Requesting: {_request_url}")
+        self._logger.debug(f"Requesting: {_request_url}")
 
         response = requests.get(_request_url, headers=_request_headers)
 
@@ -62,15 +62,9 @@ class SpringConfigClient:
         ```
         """
         key_list = key.split(delim)
-        logging.debug(f"Key attribute: {key_list}")
-
         attribute_content = self._config.get(key_list[0])
-        logging.debug(f"Attribute content: {attribute_content}")
-
         for key in key_list[1:]:
             attribute_content = attribute_content.get(key)
-
-        logging.debug(f"Configuration getted: {attribute_content}")
 
         return attribute_content
 
