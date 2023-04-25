@@ -2,12 +2,12 @@ import logging
 
 import requests
 
-from spring_config import Singleton, ClientConfiguration
+from spring_config import ClientConfiguration
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 
-class SpringConfigClient(metaclass=Singleton):
+class SpringConfigClient:
     def __init__(self, client_config: ClientConfiguration):
 
         address = client_config.get_address()
