@@ -1,11 +1,8 @@
-import base64
 import logging
-import sys
 
 import requests
 
 from spring_config import Singleton, ClientConfiguration
-from spring_config.utils import str_is_blank
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
@@ -23,22 +20,15 @@ class SpringConfigClient(metaclass=Singleton):
 
         logging.debug(f"Requesting: {_request_url}")
 
-        try:
-            response = requests.get(_request_url, headers=_request_headers)
+        response = requests.get(_request_url, headers=_request_headers)
 
-            if response.status_code == 200:
-                self._config = response.json()
-            else:
-                raise Exception(
-                    "Failed to acquire configuration",
-                    f"HTTP Response Code : {response.status_code}",
-                )
-
-        except requests.RequestException as err:
-            logging.exception(f"Cannot send a request to {_request_url}", err)
-
-            # Exit the application
-            sys.exit(1)
+        if response.status_code == 200:
+            self._config = response.json()
+        else:
+            raise Exception(
+                "Failed to acquire configuration",
+                f"HTTP Response Code : {response.status_code}",
+            )
 
     def get_config(self):
         return self._config
