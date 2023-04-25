@@ -27,7 +27,9 @@ jobs:
       with:
         python-version: '3.x'
     - name: Install dependencies
-      run: |
+      run: |-
         python -m pip install --upgrade pip twine setuptools
         python setup.py sdist bdist
-        TWINE_PASSWORD=${{ env.PYPI_TOKEN}} RELEASE=${{ env.GITHUB_REF_NAME }} twine upload -u __token__ dist/*
+        export TWINE_PASSWORD="${{ secrets.PYPI_TOKEN }}"
+        export RELEASE="${{ env.GITHUB_REF_NAME }}"
+        twine upload -u __token__ dist/*
