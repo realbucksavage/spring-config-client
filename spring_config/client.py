@@ -33,13 +33,35 @@ class SpringConfigClient:
     def get_config(self):
         return self._config
 
-    def get_attribute(self, value: str, delim: str = "."):
-        """Get attribute from configurations.
-        Use <dot> to define a path on a key tree.
-
-        https://github.com/amenezes/config-client/blob/master/config/spring.py#L100
+    def get(self, key: str):
         """
-        key_list = value.split(delim)
+        This method exists as an alias to get_attribute to maintain compatibility with dict methods. Invoking `get` is
+        identical to invoking `get_attributes(key, ".")`.
+
+        :param key: The key of config value to find.
+        :return: The config value or `None`
+        """
+        return self.get_attribute(key, ".")
+
+    def get_attribute(self, key: str, delim: str = "."):
+        """
+        Find a configuration value identified by `key`. Nested values can be searched by combining their keys by `delim`.
+
+        Using the following configuration as an example:
+        ```
+        # some_config_value: xyz
+        # some:
+        #    nested:
+        #        value: abc
+
+        # returns xyz
+        cfg.get_attribute("some_config_value")
+
+        # returns abc
+        cfg.get_attribute("some.nested.value")
+        ```
+        """
+        key_list = key.split(delim)
         logging.debug(f"Key attribute: {key_list}")
 
         attribute_content = self._config.get(key_list[0])
@@ -53,5 +75,7 @@ class SpringConfigClient:
         return attribute_content
 
     def get_keys(self):
-        """List all keys from configuration retrieved."""
+        """
+        List all keys from configuration retrieved.
+        """
         return self._config.keys()
