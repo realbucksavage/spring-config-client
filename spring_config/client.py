@@ -30,6 +30,22 @@ class SpringConfigClient:
                 f"HTTP Response Code : {response.status_code}",
             )
 
+    @classmethod
+    def fromurl(cls, url, client_config):
+        _request_url = url
+        _request_headers = {"Authorization": client_config.get_authn_header()}
+
+        self._logger.debug(f"Requesting: {_request_url}")
+
+        response = requests.get(_request_url, headers=_request_headers)
+
+        if response.status_code == 200:
+            self._config = response.json()
+        else:
+            raise Exception(
+                "Failed to acquire configuration",
+                f"HTTP Response Code : {response.status_code}",
+         
     def get_config(self):
         return self._config
 
