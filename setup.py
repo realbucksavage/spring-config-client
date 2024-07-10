@@ -5,8 +5,7 @@ import setuptools
 
 release_tag = os.getenv("RELEASE")
 if not release_tag:
-    print("RELEASE environment must be set")
-    exit(2)
+    release_tag = "latest"
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
