@@ -5,7 +5,7 @@ import setuptools
 
 release_tag = os.getenv("RELEASE")
 if not release_tag:
-    release_tag = "latest"
+    release_tag = "0.1"
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
