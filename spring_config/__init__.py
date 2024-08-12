@@ -1,4 +1,5 @@
 import base64
+from typing import Union
 from spring_config.utils import str_is_blank
 
 
@@ -23,16 +24,19 @@ class ClientConfiguration:
         app_name: str,
         profile: str,
         branch: str,
-        authentication: tuple = ("", ""),
+        authentication: Union[tuple, str] = ("", ""),
     ):
         self._address = address
         self._app_name = app_name
         self._profile = profile
         self._branch = branch
 
-        _uname, _passw = authentication
-        _basic = base64.b64encode(f"{_uname}:{_passw}".encode())
-        self._authn_header = f"Basic {_basic.decode()}"
+        if isinstance(authentication, str):
+            self._authn_header = authentication
+        elif isinstance(authentication, tuple):
+            _uname, _passw = authentication
+            _basic = base64.b64encode(f"{_uname}:{_passw}".encode())
+            self._authn_header = f"Basic {_basic.decode()}"
 
     def get_address(self) -> str:
         return self._address
@@ -89,3 +93,4 @@ class ClientConfigurationBuilder:
         return ClientConfiguration(
             self._address, self._app_name, self._profile, self._branch, self._authn
         )
+
